@@ -16,10 +16,7 @@ export default class Game {
         new InputHandler(this.paddle);
     }
     update(deltaTime) {
-        this.gameObjects.forEach(object => {
-            console.log(object);
-            object.update(deltaTime);
-        });
+        this.gameObjects.forEach(object => object.update(deltaTime));
     }
     draw(ctx) {
         this.gameObjects.forEach(object => object.draw(ctx));
