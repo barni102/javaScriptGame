@@ -9,7 +9,7 @@ const gameWidth = 1280;
 const gameHeight = 720;
 
 let paddle = new Paddle(gameWidth, gameHeight);
-let ball = new Ball();
+let ball = new Ball(gameWidth, gameHeight);
 
 new InputHandler(paddle);
 
@@ -19,11 +19,13 @@ function gameLoop(timestmap) {
     let deltaTime = timestmap - lastTime;
     lastTime = timestmap;
 
-    ctx.clearRect(0, 0, 1280, 720);
-    paddle.update(deltaTime);
+    ctx.clearRect(0, 0, gameWidth, gameHeight);
+    paddle.update();
     paddle.draw(ctx);
+
+    ball.update(deltaTime);
     ball.draw(ctx);
 
     requestAnimationFrame(gameLoop);
 }
-gameLoop();
+requestAnimationFrame(gameLoop);
