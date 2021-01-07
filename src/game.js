@@ -1,13 +1,14 @@
 import Paddle from "/src/paddle.js";
 import InputHandler from "/src/input.js";
 import Ball from "/src/ball.js";
-import { buildLevel, level1 } from "/src/levels.js";
+import { buildLevel, level1, level2 } from "/src/levels.js";
 
 const GAMESTATE = {
     PAUSED: 0,
     RUNNING: 1,
     MENU: 2,
     GAMEOVER: 3,
+    NEWLEVEL: 4,
 };
 
 export default class Game {
@@ -18,14 +19,18 @@ export default class Game {
         this.paddle = new Paddle(this);
         this.ball = new Ball(this);
         this.gameObjects = [];
+        this.bricks = [];
         this.lives = 3;
+        this.levels = [level1, level2];
+        this.currentLevel = 0;
         new InputHandler(this.paddle, this);
     }
     start() {
-        if (this.gamestate !== GAMESTATE.MENU) return;
-        let bricks = buildLevel(this, level1);
+        if (this.gamestate !== GAMESTATE.MENU && this.gamestate !== GAMESTATE.NEWLEVEL) return;
+        this.bricks = buildLevel(this, this.levels[this.currentLevel]);
+        this.ball.reset();
 
-        this.gameObjects = [this.ball, this.paddle, ...bricks];
+        this.gameObjects = [this.ball, this.paddle];
         this.gamestate = GAMESTATE.RUNNING;
     }
     update(deltaTime) {
@@ -36,11 +41,18 @@ export default class Game {
             this.gamestate === GAMESTATE.GAMEOVER
         )
             return;
-        this.gameObjects.forEach(object => object.update(deltaTime));
-        this.gameObjects = this.gameObjects.filter(object => !object.markedForDeletion);
+
+        if (this.bricks.length === 0) {
+            this.currentLevel++;
+            this.gamestate = GAMESTATE.NEWLEVEL;
+            this.start();
+        }
+
+        [...this.gameObjects, ...this.bricks].forEach(object => object.update(deltaTime));
+        this.bricks = this.bricks.filter(brick => !brick.markedForDeletion);
     }
     draw(ctx) {
-        this.gameObjects.forEach(object => object.draw(ctx));
+        [...this.gameObjects, ...this.bricks].forEach(object => object.draw(ctx));
 
         if (this.gamestate === GAMESTATE.PAUSED) {
             ctx.rect(0, 0, this.gameWidth, this.gameHeight);
