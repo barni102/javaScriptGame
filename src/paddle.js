@@ -1,9 +1,10 @@
 export default class Paddle {
     constructor(game) {
+        this.image = document.getElementById("img_paddle");
         this.gameWidth = game.gameWidth;
 
-        this.width = 200;
-        this.height = 20;
+        this.width = 244;
+        this.height = 64;
 
         this.maxSpeed = 8;
         this.speed = 0;
@@ -24,8 +25,7 @@ export default class Paddle {
         this.speed = 0;
     }
     draw(ctx) {
-        ctx.fillStyle = "#0ff";
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
 
     update(deltaTime) {

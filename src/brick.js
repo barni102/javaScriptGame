@@ -8,8 +8,8 @@ export default class Brick {
 
         this.position = position;
 
-        this.width = 128;
-        this.height = 24;
+        this.width = 160;
+        this.height = 62;
 
         this.markedForDeletion = false;
     }
