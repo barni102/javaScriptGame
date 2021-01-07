@@ -17,6 +17,9 @@ export default class InputHandler {
                 case "Escape":
                     game.togglePause();
                     break;
+                case " ":
+                    game.start();
+                    break;
             }
         });
         document.addEventListener("keyup", Event => {
