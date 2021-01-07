@@ -17,16 +17,17 @@ export function buildLevel(game, level) {
 
     return bricks;
 }
-export const level1 = [
+const level1 = [
     //[0, 1, 0, 1, 0, 1, 0, 0, 1, 0],
     //[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1],
     [0, 0, 0, 0, 0, 0, 0, 1],
 ];
 
-export const level2 = [
+const level2 = [
     //[0, 1, 0, 1, 0, 1, 0, 0, 1, 0],
     //[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     //[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [0, 0, 0, 0, 0, 0, 0, 1],
 ];
+export const levels = [level1, level2];
