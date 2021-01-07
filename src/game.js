@@ -2,6 +2,7 @@ import Paddle from "/src/paddle.js";
 import InputHandler from "/src/input.js";
 import Ball from "/src/ball.js";
 import { buildLevel, levels } from "/src/levels.js";
+import { buildlife } from "/src/lifes.js";
 
 const GAMESTATE = {
     PAUSED: "Pause",
@@ -21,24 +22,20 @@ export default class Game {
         this.ball = new Ball(this);
         this.gameObjects = [];
         this.bricks = [];
+        this.livesImg = [];
         this.lives = 3;
         this.levels = levels;
         this.currentLevel = 0;
         new InputHandler(this.paddle, this);
     }
-    reset() {
-        this.gameObjects = [];
-        this.bricks = [];
-        this.lives = 3;
-        this.levels = [level1, level2];
-        this.currentLevel = 0;
-    }
+
     start() {
         if (this.gamestate !== GAMESTATE.MENU && this.gamestate !== GAMESTATE.NEWLEVEL) {
             return;
         }
 
         this.bricks = buildLevel(this, this.levels[this.currentLevel]);
+        //livesImg = buildlife(this, this.lives);
         this.ball.reset();
 
         this.gameObjects = [this.ball, this.paddle];
@@ -69,6 +66,8 @@ export default class Game {
     }
     draw(ctx) {
         [...this.gameObjects, ...this.bricks].forEach(object => object.draw(ctx));
+        ctx.font = "30px Arial";
+        ctx.fillText("Level " + (this.currentLevel + 1 + " / " + this.levels.length), 100, 50);
 
         if (this.gamestate === GAMESTATE.PAUSED) {
             ctx.rect(0, 0, this.gameWidth, this.gameHeight);
