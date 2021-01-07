@@ -11,11 +11,11 @@ export default class Ball {
 
         this.position = {
             x: 10,
-            y: 10,
+            y: 600,
         };
         this.speed = {
             x: 4,
-            y: 4,
+            y: -4,
         };
         this.size = 50;
     }
