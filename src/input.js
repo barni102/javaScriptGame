@@ -23,7 +23,6 @@ export default class InputHandler {
             }
         });
         document.addEventListener("keyup", Event => {
-            console.log(Event.key);
             switch (Event.key) {
                 case "ArrowLeft":
                     if (paddle.speed < 0) paddle.stop();
