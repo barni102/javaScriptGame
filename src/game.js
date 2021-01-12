@@ -2,7 +2,6 @@ import Paddle from "/src/paddle.js";
 import InputHandler from "/src/input.js";
 import Ball from "/src/ball.js";
 import { buildLevel, levels } from "/src/levels.js";
-import { buildlife } from "/src/lifes.js";
 
 const GAMESTATE = {
     PAUSED: "Pause",
@@ -35,7 +34,6 @@ export default class Game {
         }
 
         this.bricks = buildLevel(this, this.levels[this.currentLevel]);
-        //livesImg = buildlife(this, this.lives);
         this.ball.reset();
 
         this.gameObjects = [this.ball, this.paddle];
@@ -68,6 +66,8 @@ export default class Game {
         [...this.gameObjects, ...this.bricks].forEach(object => object.draw(ctx));
         ctx.font = "30px Arial";
         ctx.fillText("Level " + (this.currentLevel + 1 + " / " + this.levels.length), 100, 50);
+        ctx.font = "30px Arial";
+        ctx.fillText("Lives " + ("3 / " + this.lives), 1180, 50);
 
         if (this.gamestate === GAMESTATE.PAUSED) {
             ctx.rect(0, 0, this.gameWidth, this.gameHeight);
@@ -89,7 +89,7 @@ export default class Game {
         }
         if (this.gamestate === GAMESTATE.GAMEOVER) {
             ctx.rect(0, 0, this.gameWidth, this.gameHeight);
-            ctx.fillStyle = "rgba(0,0,0,1)";
+            ctx.fillStyle = "rgba(0,0,0,0.5)";
             ctx.fill();
             ctx.font = "30px Arial";
             ctx.fillStyle = "White";
